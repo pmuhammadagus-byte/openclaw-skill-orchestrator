@@ -1,0 +1,55 @@
+{
+  "name": "@pmuhammadagus-byte/openclaw-skill-orchestrator",
+  "version": "1.0.0",
+  "description": "Universal skill orchestrator plugin for OpenClaw. Discovers, validates, audits, and resolves conflicts across all workspace skills.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit",
+    "test": "node --test dist/**/*.test.js"
+  },
+  "dependencies": {
+    "yaml": "^2.7.0",
+    "fast-glob": "^3.3.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "@types/node": "^22.0.0"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.3.24-beta.2"
+  },
+  "openclaw": {
+    "extensions": ["./dist/index.js"],
+    "compat": {
+      "pluginApi": ">=2026.3.24-beta.2",
+      "minGatewayVersion": "2026.3.24-beta.2"
+    },
+    "build": {
+      "openclawVersion": "2026.7.1",
+      "pluginSdkVersion": "2026.7.1"
+    }
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "skill",
+    "orchestrator",
+    "audit",
+    "conflict-resolution"
+  ],
+  "author": "OpenClaw Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuhammadagus-byte/openclaw-skill-orchestrator.git"
+  }
+}

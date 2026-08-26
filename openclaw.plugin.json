@@ -1,0 +1,46 @@
+{
+  "id": "skill-orchestrator",
+  "name": "Skill Orchestrator",
+  "description": "Discovers, validates, audits, and resolves conflicts across all workspace skills. Ensures smooth operation when you have many custom skills.",
+  "contracts": {
+    "tools": [
+      "skill_audit",
+      "skill_conflict_detect",
+      "skill_validate",
+      "skill_health_report",
+      "skill_fix"
+    ]
+  },
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "skillsDir": {
+        "type": "string",
+        "description": "Path to skills directory. Defaults to ~/.openclaw/workspace/skills",
+        "default": ""
+      },
+      "autoFix": {
+        "type": "boolean",
+        "description": "Automatically apply safe fixes when conflicts are detected",
+        "default": false
+      },
+      "strictMode": {
+        "type": "boolean",
+        "description": "Enable strict validation (fail on warnings)",
+        "default": false
+      },
+      "similarityThreshold": {
+        "type": "number",
+        "description": "Trigger similarity threshold for conflict detection (0.0-1.0)",
+        "default": 0.6,
+        "minimum": 0,
+        "maximum": 1
+      }
+    }
+  },
+  "version": "1.0.0"
+}
