@@ -109,25 +109,27 @@ async function discoverSkillFiles(dir: string): Promise<string[]> {
 
 async function checkBinary(binary: string): Promise<boolean> {
   try {
-    const { execSync } = await import("node:child_process");
-    execSync(`which ${binary}`, { stdio: "ignore" });
-    return true;
+    const { access } = await import("node:fs/promises");
+    const { delimiter } = await import("node:path");
+    const { env } = await import("node:process");
+    const dirs = (env.PATH || "").split(delimiter).filter(Boolean);
+    for (const dir of dirs) {
+      try {
+        await access(join(dir, binary));
+        return true;
+      } catch {
+        // try next directory
+      }
+    }
+    return false;
   } catch {
     return false;
   }
 }
 
-async function getBinaryVersion(binary: string): Promise<string | undefined> {
-  try {
-    const { execSync } = await import("node:child_process");
-    const version = execSync(`${binary} --version 2>/dev/null || ${binary} -version 2>/dev/null || ${binary} -v 2>/dev/null`, {
-      encoding: "utf-8",
-      timeout: 5000,
-    })
-      .split("\n")[0]
-      .trim();
-    return version || "installed";
-  } catch {
-    return undefined;
-  }
+async function getBinaryVersion(_binary: string): Promise<string | undefined> {
+  // Version detection intentionally omitted: it would require spawning the
+  // binary, which ClawHub's static scanner flags as a command-injection risk.
+  // Presence is already reported via checkBinary, which is sufficient for audit.
+  return undefined;
 }
